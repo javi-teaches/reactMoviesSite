@@ -1,36 +1,66 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-class MoviesList extends Component {
-	constructor () {
-		super();
-		this.state = {
-			movies: [{
-				title: 'Inidiana Jones',
-				overview: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. A minus, similique perspiciatis sit veniam odio deleniti! Voluptate quos quia animi molestiae impedit eaque repudiandae necessitatibus exercitationem id, consequuntur repellendus alias',
-				releaseDate: '2020-05-11',
-				poster: 'https://static.independent.co.uk/s3fs-public/thumbnails/image/2018/06/29/10/indiana-jones.jpg'
-			}]
-		}
-	}
+const MoviesList = (props) => {
 
-	componentDidMount () {
+	const moviesTitle = useRef(null);
+
+	const [movies, setMovies] = useState([]);
+	const [users, setUsers] = useState([]);
+
+	useEffect(() => {
 		fetch('/api')
 			.then(response => response.json())
 			.then(data => {
-				this.setState(prevState => {
-					return { movies: [...prevState.movies, ...data] }
-				});
-				// this.setState({movies: [...this.state.movies, ...data]});
+				setMovies(data)
 			})
-	}
+		
+		fetch('https://jsonplaceholder.typicode.com/users')
+			.then(response => response.json())
+			.then(data => {
+				setUsers(data);
+			})
+			
+		console.log(moviesTitle.current);
+		moviesTitle.current.style.color = 'salmon';
+	}, []);
 
-	render () {
-		console.log('ESTADO MOVIES');
-		console.log(this.state.movies);
-		return (
-			<h2>Movies</h2>
-		)
-	}
+	return (
+		<React.Fragment>
+			<h2 ref={moviesTitle} >Movies v2</h2>
+			<p>{ props.testing }</p>
+			<div className="row">
+				<div className="col-6">
+					<ol>
+						{
+							movies.map(oneMovie => {
+								return (
+									<li key={oneMovie.id}>
+										{oneMovie.title} <br />
+										<img src={oneMovie.poster} width="200" alt={oneMovie.title} />
+									</li>
+								)
+							})
+						}
+					</ol>
+				</div>
+				<div className="col-6">
+					<ol>
+						{
+							users.map(oneUser => {
+								return (
+									<li key={oneUser.id}>
+										{oneUser.name} <br />
+										<a href={`mailto:${oneUser.email}`}>{oneUser.email}</a>
+									</li>
+								)
+							})
+						}
+					</ol>
+				</div>
+			</div>
+			
+		</React.Fragment>
+	)
 }
 
 export default MoviesList;

@@ -2,16 +2,14 @@ import React from 'react';
 
 // Components
 import MoviesList from '../components/MoviesList';
+import Counter from '../components/Counter';
 
 function Home () {
 	return (
 		<div className="container">
-			<h1 className="text-danger">Soy la HOME</h1>
-			<MoviesList />
+			<Counter />
+			<MoviesList testing='Just for test' />
 			<hr/>
-			<img src="/images/darthvader.jpg" alt=""/>
-			<img src="/images/hulk.jpg" alt=""/>
-			<img src="/images/luke.jpg" alt=""/>
 		</div>
 	)
 }
