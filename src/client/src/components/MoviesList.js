@@ -20,7 +20,7 @@ const MoviesList = (props) => {
 				setUsers(data);
 			})
 			
-		console.log(moviesTitle.current);
+		// console.log(moviesTitle.current);
 		moviesTitle.current.style.color = 'salmon';
 	}, []);
 
@@ -37,6 +37,7 @@ const MoviesList = (props) => {
 									<li key={oneMovie.id}>
 										{oneMovie.title} <br />
 										<img src={oneMovie.poster} width="200" alt={oneMovie.title} />
+										<p>{oneMovie.overview}</p>
 									</li>
 								)
 							})

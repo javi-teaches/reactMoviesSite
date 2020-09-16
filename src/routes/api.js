@@ -10,12 +10,19 @@ router.get('/', (req, res) => {
 		]
 	})
 		.then(movies => {
-			res.send(movies);
+			res.json(movies);
 		});
 });
 
-router.post('', (req, res) => {
-	res.send('Ok');
+router.post('/', (req, res) => {
+	Movie.create(req.body)
+		.then(dbRes => {
+			res.status(200).json({
+				status: 200,
+				message: 'todo pipi cucu',
+			});
+		})
+	
 })
 
 module.exports = router;
